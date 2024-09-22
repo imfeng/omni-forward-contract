@@ -9,12 +9,13 @@ import "./tasks";
 // Run 'npx hardhat vars setup' to see the list of variables that need to be set
 const mnemonic: string = vars.get("MNEMONIC_");
 const infuraApiKey: string = vars.get("INFURA_API_KEY");
-const PPPPPPPP: string = vars.get("PPPPPPPP");
-const MAINNET_RPC_URL = vars.get("MAINNET_RPC_URL");
+
 
 const chainIds = {
   "merlin-testnet": 686868,
   "arbitrum-mainnet": 42161,
+  "arbitrum-testnet": 421614,
+  "base-testnet": 84532,
   avalanche: 43114,
   bsc: 56,
   "bsc-testnet": 97,
@@ -30,6 +31,12 @@ const chainIds = {
 function getChainConfig(chain: keyof typeof chainIds): NetworkUserConfig {
   let jsonRpcUrl: string;
   switch (chain) {
+    case "base-testnet":
+      jsonRpcUrl = "https://base-sepolia.blockpi.network/v1/rpc/public";
+      break;
+    case "arbitrum-testnet":
+      jsonRpcUrl = "https://arbitrum-sepolia.blockpi.network/v1/rpc/public";
+      break;
     case "merlin-testnet":
       jsonRpcUrl = "https://testnet-rpc.merlinchain.io";
       break;
@@ -99,18 +106,20 @@ const config: HardhatUserConfig = {
     arbitrum: getChainConfig("arbitrum-mainnet"),
     avalanche: getChainConfig("avalanche"),
     bsc: getChainConfig("bsc"),
-    mainnet: {
-      accounts: [
-        PPPPPPPP as string,
-      ],
-      url: MAINNET_RPC_URL,
-    },
+    // mainnet: {
+    //   accounts: [
+    //     PPPPPPPP as string,
+    //   ],
+    //   url: MAINNET_RPC_URL,
+    // },
     optimism: getChainConfig("optimism-mainnet"),
     "polygon-mainnet": getChainConfig("polygon-mainnet"),
     "polygon-mumbai": getChainConfig("polygon-mumbai"),
     sepolia: getChainConfig("sepolia"),
     'bsc-testnet': getChainConfig("bsc-testnet"),
     'merlin-testnet': getChainConfig("merlin-testnet"),
+    'arbitrum-testnet': getChainConfig("arbitrum-testnet"),
+    'base-testnet': getChainConfig("base-testnet"),
   },
   paths: {
     artifacts: "./artifacts",

@@ -2,7 +2,7 @@ import { IERC20Metadata as IERC20 } from "@openzeppelin/contracts/token/ERC20/ex
 
 import { SafeERC20 } from "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol";
 
-contract OmniForwardMarket {
+contract OmniForwardRouter {
   using SafeERC20 for IERC20;
 
   constructor() {}

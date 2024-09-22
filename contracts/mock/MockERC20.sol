@@ -15,7 +15,7 @@ contract MockERC20 is ERC20, Ownable {
   }
 
   function mint(address receiver, uint mintAmount) external returns (uint) {
-    require(msg.sender == owner(), "MockERC20: only vToken or owner can mint");
+    // require(msg.sender == owner(), "MockERC20: only vToken or owner can mint");
     _mint(receiver, mintAmount);
     return mintAmount;
   }

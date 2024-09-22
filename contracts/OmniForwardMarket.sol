@@ -119,10 +119,6 @@ contract OmniForwardMarket is OmniForwardMarketBase, Ownable, CCIPReceiver {
     uint256 deposited = deposits[msg.sender][transferredToken];
     uint256 borrowable = (deposited * 70) / 100; // 70% collaterization ratio.
 
-    // In this example we treat BnM as though it has the same value SNX. This is because BnM tokens are dummy tokens that are not on Chainlink Pricefeeds.
-    // And that the USD/USDC peg is a perfect 1:1
-    // SNX/USD on Sepolia (https://sepolia.etherscan.io/address/0xc0F82A46033b8BdBA4Bb0B0e28Bc2006F64355bC)
-    // Docs: https://docs.chain.link/data-feeds/price-feeds/addresses#Sepolia%20Testnet
     AggregatorV3Interface priceFeed = AggregatorV3Interface(0xc0F82A46033b8BdBA4Bb0B0e28Bc2006F64355bC);
 
     (, int256 price, , , ) = priceFeed.latestRoundData();
@@ -137,9 +133,6 @@ contract OmniForwardMarket is OmniForwardMarketBase, Ownable, CCIPReceiver {
     return borrowableInUSDC;
   }
 
-  // Repay the Protocol. Transfer tokens back to source chain.
-  // Assumes borrower has approved this contract to burn their borrowed token.
-  // Assumes borrower has approved this contract to "spend" the transferred token so it can be transferred.
   function repayAndSendMessage(uint256 amount, uint64 destinationChain, address receiver, bytes32 msgId) public {
     require(amount >= borrowings[msg.sender][address(underlying)], "Repayment amount is less than amount borrowed");
 
